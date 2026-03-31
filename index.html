@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>swissLean · SalesGuide Generator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #C0321A;
+    --red2: #E8452A;
+    --dark: #1A0F0A;
+    --dark2: #2C1A10;
+    --bg: #F7F4F0;
+    --card: #FFFFFF;
+    --border: #E8E0D8;
+    --text: #1A1410;
+    --muted: #8A7F78;
+    --teal: #5AADA0;
+    --green: #2EAD6E;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--dark);
+    padding: 18px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 3px solid var(--red);
+  }
+  .logo {
+    font-family: 'Sora', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.3px;
+  }
+  .logo span { color: var(--teal); }
+  .header-badge {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 5px 12px;
+    border-radius: 20px;
+  }
+
+  /* MAIN */
+  main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px;
+  }
+  .card {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    padding: 48px 52px;
+    max-width: 520px;
+    width: 100%;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+  }
+
+  .card-eyebrow {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 10px;
+  }
+  .card-title {
+    font-family: 'Sora', sans-serif;
+    font-size: 30px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.15;
+    margin-bottom: 8px;
+  }
+  .card-title em { color: var(--red); font-style: normal; }
+  .card-sub {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 36px;
+    max-width: 380px;
+  }
+
+  /* STEPS */
+  .steps {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 32px;
+  }
+  .step-item {
+    flex: 1;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    text-align: center;
+  }
+  .step-num {
+    font-family: 'Sora', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--muted);
+    display: block;
+  }
+  .step-label {
+    font-size: 10px;
+    color: var(--muted);
+    line-height: 1.4;
+    margin-top: 3px;
+  }
+  .step-item:nth-child(1) .step-num { color: var(--red); }
+  .step-item:nth-child(2) .step-num { color: #E8862A; }
+  .step-item:nth-child(3) .step-num { color: var(--teal); }
+  .step-item:nth-child(4) .step-num { color: var(--green); }
+
+  /* FORM */
+  .form-group { margin-bottom: 18px; }
+  label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+    letter-spacing: 0.3px;
+  }
+  .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  input[type="text"], input[type="email"] {
+    width: 100%;
+    padding: 13px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    background: var(--bg);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  input:focus {
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px rgba(192,50,26,0.1);
+    background: #fff;
+  }
+  input::placeholder { color: var(--muted); }
+
+  /* BUTTON */
+  .btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--red), var(--red2));
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Sora', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(192,50,26,0.35); }
+  .btn:active { transform: translateY(0); }
+  .btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+
+  /* LOADING STATE */
+  .loading-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(26,15,10,0.92);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .loading-overlay.active { display: flex; }
+  .spinner {
+    width: 56px;
+    height: 56px;
+    border: 4px solid rgba(255,255,255,0.1);
+    border-top-color: var(--red);
+    border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 340px;
+    width: 100%;
+  }
+  .loading-step {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: all 0.4s;
+  }
+  .loading-step.active {
+    background: rgba(192,50,26,0.15);
+    border-color: rgba(192,50,26,0.3);
+  }
+  .loading-step.done {
+    background: rgba(46,173,110,0.1);
+    border-color: rgba(46,173,110,0.2);
+  }
+  .ls-icon { font-size: 18px; flex-shrink: 0; }
+  .ls-text { font-family: 'DM Sans', sans-serif; font-size: 13px; color: rgba(255,255,255,0.6); }
+  .loading-step.active .ls-text { color: #fff; font-weight: 600; }
+  .loading-step.done .ls-text { color: rgba(46,173,110,0.9); }
+  .loading-title {
+    font-family: 'Sora', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+  }
+  .loading-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    text-align: center;
+    max-width: 280px;
+    line-height: 1.6;
+  }
+
+  /* ERROR */
+  .error-box {
+    display: none;
+    background: #FEF3F0;
+    border: 1.5px solid #FCDDD6;
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: #7A2010;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  .error-box.visible { display: block; }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark);
+    padding: 16px 40px;
+    text-align: center;
+    font-size: 11px;
+    color: rgba(255,255,255,0.25);
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  @media (max-width: 600px) {
+    .card { padding: 32px 24px; }
+    .input-row { grid-template-columns: 1fr; }
+    header { padding: 16px 20px; }
+    .header-badge { display: none; }
+    .steps { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">swiss<span>Lean</span></div>
+  <div class="header-badge">AI SalesGuide Generator</div>
+</header>
+
+<main>
+  <div class="card">
+    <div class="card-eyebrow">Verkaufsvorbereitung · KI-gestützt</div>
+    <h1 class="card-title">Dein <em>personalisierter</em><br>SalesGuide</h1>
+    <p class="card-sub">Name und E-Mail eingeben – der Workflow analysiert Close CRM, Homepage und Branche, und liefert in ~60 Sekunden einen vollständigen Gesprächsleitfaden.</p>
+
+    <div class="steps">
+      <div class="step-item">
+        <span class="step-num">01</span>
+        <div class="step-label">Close CRM<br>Daten</div>
+      </div>
+      <div class="step-item">
+        <span class="step-num">02</span>
+        <div class="step-label">Homepage<br>Analyse</div>
+      </div>
+      <div class="step-item">
+        <span class="step-num">03</span>
+        <div class="step-label">Branchen-<br>Recherche</div>
+      </div>
+      <div class="step-item">
+        <span class="step-num">04</span>
+        <div class="step-label">SalesGuide<br>HTML</div>
+      </div>
+    </div>
+
+    <div class="error-box" id="errorBox"></div>
+
+    <div class="form-group">
+      <label>Name des Interessenten</label>
+      <div class="input-row">
+        <input type="text" id="firstName" name="firstName" placeholder="Vorname" autocomplete="given-name">
+        <input type="text" id="lastName" name="lastName" placeholder="Nachname" autocomplete="family-name">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>E-Mail-Adresse</label>
+      <input type="email" id="email" name="email" placeholder="name@firma.ch" autocomplete="email">
+    </div>
+
+    <button class="btn" id="submitBtn" onclick="generateSalesGuide()">
+      <span id="btnText">⚡ SalesGuide generieren</span>
+    </button>
+  </div>
+</main>
+
+<!-- LOADING OVERLAY -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-title">Analyse läuft…</div>
+  <div class="loading-sub">Bitte warten, das dauert etwa 45–90 Sekunden</div>
+  <div class="spinner"></div>
+  <div class="loading-steps">
+    <div class="loading-step active" id="ls1">
+      <span class="ls-icon">🔍</span>
+      <span class="ls-text">Kundendaten aus Close CRM laden…</span>
+    </div>
+    <div class="loading-step" id="ls2">
+      <span class="ls-icon">🌐</span>
+      <span class="ls-text">Homepage analysieren…</span>
+    </div>
+    <div class="loading-step" id="ls3">
+      <span class="ls-icon">🧠</span>
+      <span class="ls-text">DISC Persönlichkeitsanalyse…</span>
+    </div>
+    <div class="loading-step" id="ls4">
+      <span class="ls-icon">🔬</span>
+      <span class="ls-text">Branchenrecherche…</span>
+    </div>
+    <div class="loading-step" id="ls5">
+      <span class="ls-icon">📄</span>
+      <span class="ls-text">SalesGuide HTML generieren…</span>
+    </div>
+  </div>
+</div>
+
+<footer>
+  swissLean AG · Churerstrasse 88 · 8808 Pfäffikon SZ · Internes Tool · Vertraulich
+</footer>
+
+<script>
+  // ── WEBHOOK URL ─────────────────────────────────────────────────────────────
+  // IMPORTANT: Replace this with your actual n8n webhook URL after activating the workflow
+  const WEBHOOK_URL = 'https://workflow.swisslean-automation.ch/webhook/salesguide';
+
+  // ── LOADING STEP ANIMATION ──────────────────────────────────────────────────
+  const stepTimings = [0, 8000, 18000, 30000, 50000];
+  let stepTimers = [];
+
+  function startLoadingAnimation() {
+    // Reset all steps
+    document.querySelectorAll('.loading-step').forEach((el, i) => {
+      el.classList.remove('active', 'done');
+    });
+    document.getElementById('ls1').classList.add('active');
+
+    // Animate through steps
+    for (let i = 1; i < 5; i++) {
+      stepTimers.push(setTimeout(() => {
+        document.getElementById('ls' + i).classList.remove('active');
+        document.getElementById('ls' + i).classList.add('done');
+        if (i < 5) {
+          document.getElementById('ls' + (i+1)).classList.add('active');
+        }
+      }, stepTimings[i]));
+    }
+  }
+
+  function stopLoadingAnimation() {
+    stepTimers.forEach(t => clearTimeout(t));
+    stepTimers = [];
+  }
+
+  // ── MAIN FUNCTION ───────────────────────────────────────────────────────────
+  async function generateSalesGuide() {
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName = document.getElementById('lastName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const errorBox = document.getElementById('errorBox');
+
+    // Validate
+    errorBox.classList.remove('visible');
+    if (!firstName || !lastName) {
+      errorBox.textContent = '⚠️ Bitte Vor- und Nachname eingeben.';
+      errorBox.classList.add('visible');
+      return;
+    }
+    if (!email || !email.includes('@') || !email.includes('.')) {
+      errorBox.textContent = '⚠️ Bitte eine gültige E-Mail-Adresse eingeben.';
+      errorBox.classList.add('visible');
+      return;
+    }
+
+    // Show loading
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.disabled = true;
+    document.getElementById('loadingOverlay').classList.add('active');
+    startLoadingAnimation();
+
+    try {
+      const response = await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ firstName, lastName, email })
+      });
+
+      stopLoadingAnimation();
+      document.getElementById('loadingOverlay').classList.remove('active');
+
+      if (!response.ok) {
+        throw new Error('Server Fehler: ' + response.status);
+      }
+
+      const contentType = response.headers.get('content-type') || '';
+
+      if (contentType.includes('text/html')) {
+        const html = await response.text();
+        // Open SalesGuide in new tab
+        const newTab = window.open('', '_blank');
+        if (newTab) {
+          newTab.document.open();
+          newTab.document.write(html);
+          newTab.document.close();
+        } else {
+          // Fallback: replace current page
+          document.open();
+          document.write(html);
+          document.close();
+        }
+      } else {
+        const text = await response.text();
+        if (text.includes('<!DOCTYPE') || text.includes('<html')) {
+          const newTab = window.open('', '_blank');
+          if (newTab) {
+            newTab.document.open();
+            newTab.document.write(text);
+            newTab.document.close();
+          }
+        } else {
+          throw new Error('Unerwartete Antwort vom Server.');
+        }
+      }
+    } catch (err) {
+      stopLoadingAnimation();
+      document.getElementById('loadingOverlay').classList.remove('active');
+      errorBox.textContent = '❌ Fehler: ' + err.message + ' – Bitte prüfe die Webhook-URL oder versuche es erneut.';
+      errorBox.classList.add('visible');
+    }
+
+    submitBtn.disabled = false;
+  }
+
+  // Enter key support
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) generateSalesGuide();
+  });
+</script>
+</body>
+</html>
